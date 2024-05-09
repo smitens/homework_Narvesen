@@ -21,13 +21,13 @@ function selectProduct($products): array
 
         if ($choice === 'stop') {
             echo "Selection done.\n";
-            break; // Exit the loop and function
+            break;
         }
 
         $choice = intval($choice);
         if (!is_numeric($choice) || $choice < 1 || $choice > $index - 1) {
             echo "Invalid choice. Please enter a valid number or 'stop' to finish.\n";
-            continue; // Continue the loop to prompt user again
+            continue;
         }
 
         $selectedProduct = null;
@@ -36,7 +36,7 @@ function selectProduct($products): array
             foreach ($productList as $product) {
                 if ($currentIndex == $choice) {
                     $selectedProduct = $product;
-                    break 2; // Exit both loops
+                    break 2;
                 }
                 $currentIndex++;
             }
@@ -49,12 +49,11 @@ function selectProduct($products): array
 
                 if ($amount <= 0) {
                     echo "Invalid amount. Please enter a positive number.\n";
-                    continue; // Continue the loop to prompt user again
                 } else {
                     $totalPrice = number_format($selectedProduct['price'] / 100 * $amount, 2);
                     echo "Selected: " . $selectedProduct['name'] . ", Amount: " . $amount . ", Total Price: $" . $totalPrice . "\n";
                     $selectedProducts[] = ['name' => $selectedProduct['name'], 'price' => $selectedProduct['price'], 'amount' => $amount];
-                    break; // Exit the loop to proceed to the next product selection
+                    break;
                 }
             }
         } else {
@@ -67,7 +66,7 @@ function selectProduct($products): array
 
 $selectedProducts = selectProduct($products);
 
-echo "Selected products:\n";
+echo "Your shopping cart contains the following items:\n";
 $totalPrice = 0;
 $totalItems = 0;
 foreach ($selectedProducts as $selectedProduct) {
@@ -80,17 +79,7 @@ echo "Total items:" . $totalItems . "\n";
 echo "Total price: $" . number_format($totalPrice, 2) . "\n";
 
 
-function confirmPurchase($selectedProducts): bool {
-    echo "Your shopping cart contains the following items:\n";
-    foreach ($selectedProducts as $selectedProduct) {
-        echo "- " . $selectedProduct['name'] . ", " . $selectedProduct['amount'] . " pcs - $" .
-            number_format($selectedProduct['price'] / 100 * $selectedProduct['amount'], 2) . "\n";
-    }
-
-    echo "Total items: " . array_sum(array_column($selectedProducts, 'amount')) . "\n";
-    echo "Total price: $" . number_format(array_sum(array_map(function ($product) {
-            return $product['price'] / 100 * $product['amount'];
-        }, $selectedProducts)), 2) . "\n";
+function confirmPurchase(): bool {
 
     while (true) {
     echo "Do you want to proceed with the purchase? (yes/no): ";
@@ -106,8 +95,7 @@ function confirmPurchase($selectedProducts): bool {
 }
 
 if (!empty($selectedProducts)) {
-    if (confirmPurchase($selectedProducts)) {
-        // Process the purchase
+    if (confirmPurchase()) {
         echo "Thank you for your purchase! Looking forward to see you again soon!\n";
     } else {
         echo "Purchase cancelled.\n";
