@@ -1,0 +1,20 @@
+{
+  "products": {
+    "drinks": [
+      {"name": "Coffee", "price": 250},
+      {"name": "Tea", "price": 200},
+      {"name": "Coca-cola", "price": 150},
+      {"name": "Sprite", "price": 150}
+    ],
+    "chocolate": [
+      {"name": "Snickers", "price": 150},
+      {"name": "Mars", "price": 150},
+      {"name": "Serenade", "price": 100}
+    ],
+    "sandwich": [
+      {"name": "Cheese sandwich", "price": 350},
+      {"name": "Bacon sanswich", "price": 375},
+      {"name": "Vegan sandwich", "price": 300}
+    ]
+  }
+}
