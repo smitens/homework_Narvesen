@@ -79,8 +79,8 @@ echo "Total items:" . $totalItems . "\n";
 echo "Total price: $" . number_format($totalPrice, 2) . "\n";
 
 
-function confirmPurchase(): bool {
-
+function confirmPurchase(): bool
+{
     while (true) {
     echo "Do you want to proceed with the purchase? (yes/no): ";
     $choice = strtolower(readline());
