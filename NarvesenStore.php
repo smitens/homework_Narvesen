@@ -1,16 +1,15 @@
 <?php
-$products = json_decode(file_get_contents('products.json'), true);
 
-function selectProduct($products): array
+function selectProduct($products): stdClass
 {
-    $selectedProducts = [];
+    $selectedProducts = new stdClass();
 
     echo "Welcome to our store!\nAvailable products:\n";
     $index = 1;
-    foreach ($products['products'] as $productType => $productList) {
+    foreach ($products -> products as $productType => $productList) {
         echo ($productType) . ":\n";
         foreach ($productList as $product) {
-            echo $index . " " . $product['name'] . ", $" . number_format($product['price'] / 100, 2) . "\n";
+            echo $index . " " . $product -> name . ", $" . number_format($product -> price / 100, 2) . "\n";
             $index++;
         }
     }
@@ -32,7 +31,7 @@ function selectProduct($products): array
 
         $selectedProduct = null;
         $currentIndex = 1;
-        foreach ($products['products'] as $productList) {
+        foreach ($products -> products as $productList) {
             foreach ($productList as $product) {
                 if ($currentIndex == $choice) {
                     $selectedProduct = $product;
@@ -44,15 +43,15 @@ function selectProduct($products): array
 
         if (!empty($selectedProduct)) {
             while (true) {
-                echo "Enter the amount of " . $selectedProduct['name'] . ": ";
+                echo "Enter the amount of " . $selectedProduct -> name . ": ";
                 $amount = intval(readline());
 
                 if ($amount <= 0) {
                     echo "Invalid amount. Please enter a positive number.\n";
                 } else {
-                    $totalPrice = number_format($selectedProduct['price'] / 100 * $amount, 2);
-                    echo "Selected: " . $selectedProduct['name'] . ", Amount: " . $amount . ", Total Price: $" . $totalPrice . "\n";
-                    $selectedProducts[] = ['name' => $selectedProduct['name'], 'price' => $selectedProduct['price'], 'amount' => $amount];
+                    $totalPrice = number_format($selectedProduct -> price / 100 * $amount, 2);
+                    echo "Selected: " . $selectedProduct -> name . ", Amount: " . $amount . ", Total Price: EUR " . $totalPrice . "\n";
+                    $selectedProducts->{$selectedProduct->name} = ['name' => $selectedProduct->name, 'price' => $selectedProduct->price, 'amount' => $amount];;
                     break;
                 }
             }
@@ -63,20 +62,20 @@ function selectProduct($products): array
 
     return $selectedProducts;
 }
-
+$products = json_decode(file_get_contents('products.json'), false);
 $selectedProducts = selectProduct($products);
 
 echo "Your shopping cart contains the following items:\n";
 $totalPrice = 0;
 $totalItems = 0;
-foreach ($selectedProducts as $selectedProduct) {
-    $totalPrice += $selectedProduct['price'] / 100 * $selectedProduct['amount'];
-    $totalItems += $selectedProduct['amount'];
-    echo "- " . $selectedProduct['name'] . ", " . $selectedProduct['amount'] . " pcs - $" .
-        number_format($selectedProduct['price'] / 100 * $selectedProduct['amount'], 2) . "\n";
+foreach ($selectedProducts as $productName => $selectedProduct) {
+        $totalPrice += $selectedProduct ['price'] / 100 * $selectedProduct ['amount'];
+        $totalItems += $selectedProduct ['amount'];
+        echo "- " . $selectedProduct ['name'] . ", " . $selectedProduct ['amount'] . " pcs - EUR " .
+            number_format($selectedProduct ['price'] / 100 * $selectedProduct ['amount'], 2) . "\n";
 }
 echo "Total items:" . $totalItems . "\n";
-echo "Total price: $" . number_format($totalPrice, 2) . "\n";
+echo "Total price: EUR " . number_format($totalPrice, 2) . "\n";
 
 
 function confirmPurchase(): bool
@@ -94,7 +93,7 @@ function confirmPurchase(): bool
     }
 }
 
-if (!empty($selectedProducts)) {
+if (!empty((array)$selectedProducts)) {
     if (confirmPurchase()) {
         echo "Thank you for your purchase! Looking forward to see you again soon!\n";
     } else {
