@@ -1,20 +1,12 @@
-{
-  "products": {
-    "drinks": [
-      {"name": "Coffee", "price": 250},
-      {"name": "Tea", "price": 200},
-      {"name": "Coca-cola", "price": 150},
-      {"name": "Sprite", "price": 150}
-    ],
-    "chocolate": [
-      {"name": "Snickers", "price": 150},
-      {"name": "Mars", "price": 150},
-      {"name": "Serenade", "price": 100}
-    ],
-    "sandwich": [
-      {"name": "Cheese sandwich", "price": 350},
-      {"name": "Bacon sanswich", "price": 375},
-      {"name": "Vegan sandwich", "price": 300}
-    ]
-  }
-}
+[
+      {"category" : "drinks", "name": "Coffee", "price": 250},
+      {"category" : "drinks", "name": "Tea", "price": 200},
+      {"category" : "drinks", "name": "Coca-cola", "price": 150},
+      {"category" : "drinks", "name": "Sprite", "price": 150},
+      {"category" : "chocolate", "name": "Snickers", "price": 150},
+      {"category" : "chocolate", "name": "Mars", "price": 150},
+      {"category" : "chocolate", "name": "Serenade", "price": 100},
+      {"category" : "sandwich", "name": "Cheese sandwich", "price": 350},
+      {"category" : "sandwich", "name": "Bacon sanswich", "price": 375},
+      {"category" : "sandwich", "name": "Vegan sandwich", "price": 300}
+  ]
